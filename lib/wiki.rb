@@ -2,7 +2,7 @@ if defined?(Merb::Plugins)
 
   $:.unshift File.dirname(__FILE__)
 
-  load_dependency 'merb-slices'
+  require 'merb-slices'
   Merb::Plugins.add_rakefiles "wiki/merbtasks", "wiki/slicetasks", "wiki/spectasks"
 
   # Register the Slice for the current host application
@@ -56,7 +56,7 @@ if defined?(Merb::Plugins)
       scope.match(%r[/wiki/save/([^\.]+)]).to(:controller => 'main', :action => 'save', :path => '[1]')
       scope.match(%r[/wiki/edit/([^\.]+)]).to(:controller => 'main', :action => 'edit', :path => '[1]')
       scope.match(%r[/wiki/([^\.]+)]).to(:controller => 'main', :action => 'index', :path => '[1]')
-      scope.match('/').to(:controller => 'main', :action => 'index', :path => 'index')
+      scope.match('/wiki').to(:controller => 'main', :action => 'index', :path => 'index')
     end
     
   end

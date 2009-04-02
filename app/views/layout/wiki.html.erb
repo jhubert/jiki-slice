@@ -1,43 +1,42 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<?xml-stylesheet href="http://www.w3.org/StyleSheets/TR/W3C-WD.css" type="text/css"?>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>QWiki</title>
-  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>Prototeam HQ</title>
   <link href="<%= public_path_for :stylesheet, 'master.css' %>" type="text/css" charset="utf-8" rel="stylesheet" media="all" />
-  <script src="<%= public_path_for :javascript, 'master.js' %>" type="text/javascript" charset="utf-8"></script>
+  <script src="<%= javascript_path 'jquery.min.js' %>" type="text/javascript" charset="utf-8"></script>
+  <script src="<%= javascript_path 'master.js' %>" type="text/javascript" charset="utf-8"></script>
 </head>
-
 <body>
-  <div id="header">
-    <h1><a href="/">Wiki</a></h1>
-  </div>
-  <div id="content">
-    <% if params[:action] == 'edit' %>
-    <form action="/save/<%= params[:path] %>" method="POST"> 
-      <fieldset>
-        <textarea name="content"><%= catch_content :for_layout %></textarea>
-      </fieldset>
-      <input type="button" onclick="document.location.href='/<%= params[:path] %>';" value="Cancel" />
-      <input type="submit" value="Save" />
-    </form>
-    <% else %>
-    <a href="<%= request.referer %>">back</a> | 
-    <a href="/edit/<%= params[:path] %>">edit</a><hr />
+<h1><a href="/">The Prototeam!</a></h1>
+<div id="container">
+  <% if params[:action] == 'edit' %>
+   <form action="/wiki/save/<%= params[:path] %>" method="POST"> 
+     <fieldset>
+       <textarea name="content" rows="10" style="width: 98%"><%= catch_content :for_layout %></textarea>
+     </fieldset>
+     <input type="button" onclick="document.location.href='<%= page_url(:show,params[:path]) %>';" value="Cancel" />&nbsp;
+     <input type="submit" value="Save" />
+   </form>
+  <% else %>
     <%= catch_content :for_layout %>
-    <small>
-      Viewing version <%= @current_version %> of <%= @latest_version %><br />
+    <small class="controls">
+      Viewing version <%= @current_version %> of <%= @latest_version %><% if @timestamp %><%= @timestamp.strftime(", created on %b %d, %Y at %I:%M%p") %><% end %> | 
       <% if @current_version > 1 %>
-      <a href="/<%= @latest_path + "_v#{@current_version - 1}" %>">Previous Version</a> |
+      <a href="/wiki/<%= @latest_path + "_v#{@current_version - 1}" %>">Previous</a> | 
       <% end %>
       <% if @current_version != @latest_version %>
-      <a href="/<%= @latest_path %>">Latest Version</a> |
-      <a href="/revert/<%= @latest_path %>?version=<%= @current_version %>">Revert to this version</a>
+      <a href="/wiki/<%= @latest_path %>">Latest</a> |
+      <a href="/wiki/revert/<%= @latest_path %>?version=<%= @current_version %>">Revert</a> |
       <% end %>
+      <a href="/wiki/edit/<%= params[:path] %>">Edit</a>
     </small>
-    <hr />
-    <a href="/edit/<%= params[:path] %>">edit</a>
-    <% end %>
-  </div>
+   </div>
+  <% end %>
+</div>
+<div id="ft">
+  Maintained by <a href="mailto:jhubert@yahoo-inc.com">Jeremy Hubert</a> <a href="ymsgr:SendIM?jeremyhubert"><img src="http://opi.yahoo.com/online?&m=g&t=0&u=jeremyhubert" /></a> and <a href="mailto:awheeler@yahoo-inc.com">Aaron Wheeler</a> <a href="ymsgr:SendIM?beansforteens"><img src="http://opi.yahoo.com/online?&m=g&t=0&u=beansforteens" /></a> as part of the Search UED Innovation Group
+</div>
 </body>
 </html>

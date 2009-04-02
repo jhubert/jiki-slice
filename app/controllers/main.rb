@@ -1,15 +1,17 @@
 require 'RedCloth'
 
 class Wiki::Main < Wiki::Application
+  VERSION_REGEX = /_v[1-9][0-9]*/
   before :setup
 
   def index
     if File.exist?(@wiki_file)
-      render RedCloth.new(File.read(@wiki_file)).gsub(/\[\[(.*?)\]\]/, "<a href=\"\\1\">\\1</a>").to_html
+      @timestamp = File.stat(@wiki_file).mtime
+      render RedCloth.new(File.read(@wiki_file)).gsub(/\[\[(.*?)\]\]/) { |u| y = $1.clone; "<a href=\"/wiki/#{$1.gsub(/[^\w\d\-\s]/,'').gsub(/\s/,'-')}\">#{y}</a>" }.to_html
     else
-      return redirect "/#{params[:path].sub(/_v[1-9]+/,'')}" if is_version? && is_latest?
+      return redirect page_url(:show,params[:path].sub(VERSION_REGEX,'')) if is_version? && is_latest?
       raise 'That version does not exist' if is_version?
-      render "#{params[:path]} does not exist: <a href=\"/edit/#{params[:path]}\">Create</a>?"
+      render "#{params[:path]} does not exist: <a href=\"#{page_url(:edit,params[:path])}\">Create</a>?"
     end
   end
 
@@ -29,7 +31,7 @@ class Wiki::Main < Wiki::Application
         file.write("\n")
       end
     end
-    redirect "/#{params[:path]}"
+    redirect page_url(:show,params[:path])
   end
 
   def revert
@@ -40,23 +42,23 @@ class Wiki::Main < Wiki::Application
     else
       raise 'Unable to find that version of the file'
     end
-    redirect "/#{params[:path]}"
+    redirect page_url(:show,params[:path])
   end
 
   private
 
   def setup
     @path = params[:path]
-    @latest_path = params[:path].sub(/_v[1-9]+/,'')
+    @latest_path = params[:path].sub(VERSION_REGEX,'')
     @wiki_file = "#{Merb.root}/data/#{@path}.wiki"
     @current_version = current_version
     @latest_version = latest_version
   end
-  
+
   def is_latest?
     @current_version == @latest_version
   end
-  
+
   def is_version?
     @path != @latest_path
   end
@@ -66,14 +68,14 @@ class Wiki::Main < Wiki::Application
   end
 
   def current_version
-    v = params[:path].scan(/_v([1-9]+)/)
+    v = params[:path].scan(/_v([1-9][0-9]*)/)
     v = [latest_version] if v.blank?
     v.flatten.first.to_i
   end
 
   def latest_version
     x = 1
-    x += 1 while(File.exist?(@wiki_file.sub(/_v[1-9]+/,'').sub('.wiki',"_v#{x}.wiki")))
+    x += 1 while(File.exist?(@wiki_file.sub(VERSION_REGEX,'').sub('.wiki',"_v#{x}.wiki")))
     x
   end
 

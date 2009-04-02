@@ -2,6 +2,11 @@ module Merb
   module Wiki
     module ApplicationHelper
       
+      def page_url(action,path)
+        return "/wiki/#{path}" if action.to_s == 'show'
+        "/wiki/#{action}/#{path}"
+      end
+      
       # @param *segments<Array[#to_s]> Path segments to append.
       #
       # @return <String> 

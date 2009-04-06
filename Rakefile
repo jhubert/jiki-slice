@@ -4,12 +4,12 @@ require 'rake/gempackagetask'
 require 'merb-core'
 require 'merb-core/tasks/merb'
 
-GEM_NAME = "wiki"
-AUTHOR = "Your Name"
-EMAIL = "Your Email"
-HOMEPAGE = "http://merbivore.com/"
-SUMMARY = "Merb Slice that provides ..."
-GEM_VERSION = "1.0"
+GEM_NAME = "jiki_slice"
+AUTHOR = "Jeremy Hubert"
+EMAIL = "jhubert@gmail.com"
+HOMEPAGE = "http://jeremyhubert.com/"
+SUMMARY = "Merb Slice that provides a very simple wiki"
+GEM_VERSION = "1.2"
 
 spec = Gem::Specification.new do |s|
   s.rubyforge_project = 'merb'

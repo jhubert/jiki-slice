@@ -1,5 +1,5 @@
 namespace :slices do
-  namespace :wiki do 
+  namespace :jiki_slice do 
     
     # add your own wiki tasks here
     

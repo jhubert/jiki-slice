@@ -1,5 +1,5 @@
 namespace :slices do
-  namespace :wiki do
+  namespace :jiki_slice do
       
     desc "Run slice specs within the host application context"
     task :spec => [ "spec:explain", "spec:default" ]

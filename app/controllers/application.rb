@@ -1,4 +1,4 @@
-class Wiki::Application < Merb::Controller
+class JikiSlice::Application < Merb::Controller
   
   controller_for_slice
   

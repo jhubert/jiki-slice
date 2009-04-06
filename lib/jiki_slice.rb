@@ -3,7 +3,7 @@ if defined?(Merb::Plugins)
   $:.unshift File.dirname(__FILE__)
 
   require 'merb-slices'
-  Merb::Plugins.add_rakefiles "wiki/merbtasks", "wiki/slicetasks", "wiki/spectasks"
+  Merb::Plugins.add_rakefiles "jiki_slice/merbtasks", "jiki_slice/slicetasks", "jiki_slice/spectasks"
 
   # Register the Slice for the current host application
   Merb::Slices::register(__FILE__)
@@ -15,15 +15,15 @@ if defined?(Merb::Plugins)
   # Configuration options:
   # :layout - the layout to use; defaults to :wiki
   # :mirror - which path component types to use on copy operations; defaults to all
-  Merb::Slices::config[:wiki][:layout] ||= :wiki
+  Merb::Slices::config[:jiki_slice][:layout] ||= :jiki_slice
   
   # All Slice code is expected to be namespaced inside a module
-  module Wiki
+  module JikiSlice
     
     # Slice metadata
-    self.description = "Wiki is a chunky Merb slice!"
-    self.version = "0.0.1"
-    self.author = "Engine Yard"
+    self.description = "JikiSlice is a chunky Merb slice!"
+    self.version = "1.2"
+    self.author = "Jeremy Hubert"
     
     # Stub classes loaded hook - runs before LoadClasses BootLoader
     # right after a slice's classes have been loaded internally.
@@ -73,7 +73,7 @@ if defined?(Merb::Plugins)
   # Any component path that hasn't been set will default to Wiki.root
   #
   # Or just call setup_default_structure! to setup a basic Merb MVC structure.
-  Wiki.setup_default_structure!
+  JikiSlice.setup_default_structure!
   
   # Add dependencies for other Wiki classes below. Example:
   # dependency "wiki/other"

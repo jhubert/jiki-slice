@@ -1,5 +1,5 @@
 module Merb
-  module Wiki
+  module JikiSlice
     module ApplicationHelper
       
       def page_url(action,path)
@@ -39,7 +39,7 @@ module Merb
       # @return <String> 
       #  A path relative to the public directory, with added segments.
       def public_path_for(type, *segments)
-        ::Wiki.public_path_for(type, *segments)
+        ::JikiSlice.public_path_for(type, *segments)
       end
       
       # Construct an app-level path.
@@ -50,7 +50,7 @@ module Merb
       # @return <String> 
       #  A path within the host application, with added segments.
       def app_path_for(type, *segments)
-        ::Wiki.app_path_for(type, *segments)
+        ::JikiSlice.app_path_for(type, *segments)
       end
       
       # Construct a slice-level path.
@@ -61,7 +61,7 @@ module Merb
       # @return <String> 
       #  A path within the slice source (Gem), with added segments.
       def slice_path_for(type, *segments)
-        ::Wiki.slice_path_for(type, *segments)
+        ::JikiSlice.slice_path_for(type, *segments)
       end
       
     end

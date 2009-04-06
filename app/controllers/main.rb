@@ -1,6 +1,6 @@
 require 'RedCloth'
 
-class Wiki::Main < Wiki::Application
+class JikiSlice::Main < JikiSlice::Application
   VERSION_REGEX = /_v[1-9][0-9]*/
   before :setup
 
